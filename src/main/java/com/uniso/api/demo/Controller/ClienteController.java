@@ -10,27 +10,27 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/clientes")
+@RequestMapping
 public class ClienteController {
 
     @Autowired
     private ClienteService _cs;
 
-    @PostMapping
+    @PostMapping("/adicionar")
     public Cliente adicionar(@RequestBody Cliente cliente) {
         Cliente cli = _cs.cadastrarNovoCliente(cliente);
 
         return cli;
     }
 
-    @GetMapping
+    @GetMapping("/retornarTodos")
     public List<Cliente> listar() {
         List<Cliente> clientes = _cs.listarClientes();
 
         return clientes;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/retornar/{id}")
     public ResponseEntity<Cliente> obterCliente(@PathVariable(value = "id") Long id) {
         Cliente cli = _cs.obterCliente(id);
 
@@ -41,7 +41,7 @@ public class ClienteController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/atualizar/{id}")
     public ResponseEntity<Cliente> atualizarCliente(@PathVariable(value = "id") Long id) {
         Cliente cli = _cs.obterCliente(id);
 
@@ -54,7 +54,7 @@ public class ClienteController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Cliente> deletarCliente(@PathVariable(value = "id") Long id) {
         Cliente cli = _cs.obterCliente(id);
 
@@ -66,4 +66,5 @@ public class ClienteController {
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
 }
